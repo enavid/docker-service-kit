@@ -13,8 +13,8 @@ It’s ideal for development environments where you need a visual database inter
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/enavid/mysql-phpmyadmin.git
-cd mysql-phpmyadmin
+git clone https://github.com/enavid/docker-service-kit.git
+cd docker-service-kit/mysql-phpmyadmin
 ```
 
 ### 2. Update `.env` file if needed
