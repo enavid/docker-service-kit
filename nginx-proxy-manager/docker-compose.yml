@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: 'nginx-proxy-manager'
+    restart: always
+    ports:
+      - '${NPM_UI_PORT}:81'
+      - '${NGINX_PORT_HTTP}:80'
+      - '${NGINX_PORT_HTTPS}:443'
+    environment:
+      DB_MYSQL_HOST: ${DB_MYSQL_HOST}
+      DB_MYSQL_PORT: ${DB_MYSQL_PORT}
+      DB_MYSQL_USER: ${DB_MYSQL_USER}
+      DB_MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
+      DB_MYSQL_NAME: ${DB_MYSQL_NAME}
+    volumes:
+      - './data:/data'
+      - './letsencrypt:/etc/letsencrypt'
+    networks:
+      - local-net
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    container_name: 'mariadb-aria'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - './mysql:/var/lib/mysql'
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    name: local-net
