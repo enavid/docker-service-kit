@@ -1,0 +1,32 @@
+
+version: '3.9'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    volumes:
+      - ./docker-volumes/redis:/data
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+    networks:
+      - local-net
+
+  redis-insight:
+    image: redislabs/redisinsight:1.14.0
+    container_name: redis-insight
+    restart: always
+    volumes:
+      - ./docker-volumes/redis-insight:/db
+    ports:
+      - '8082:8001'
+    depends_on:
+      - redis
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    name: local-net
