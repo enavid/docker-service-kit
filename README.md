@@ -14,12 +14,14 @@ Each folder in this repository contains a separate Docker Compose stack with:
 
 | Service Stack              | Description                                        |
 |---------------------------|----------------------------------------------------|
-| [`kafka-kafdrop-zookeeper`](./kafka-kafdrop-zookeeper) | Kafka stack with Kafdrop UI and Zookeeper |
-| [`postgres-pgadmin`](./postgres-pgadmin)             | PostgreSQL with pgAdmin for DB management |
-| [`redis-redisinsight`](./redis-redisinsight)         | Redis with RedisInsight visualization tool |
-| [`mariadb`](./mariadb)                               | Lightweight MariaDB SQL server             |
-| [`kafka-zookeeper-kafka-ui`](./kafka-zookeeper-kafka-ui) | Kafka stack with modern Kafka UI         |
-| [`filebrowser`](./filebrowser)                       | Web-based file manager                     |
+| [filebrowser](https://github.com/enavid/docker-service-kit/tree/main/filebrowser) | Web-based file manager                     |
+| [kafka-kafdrop-zookeeper](https://github.com/enavid/docker-service-kit/tree/main/kafka-kafdrop-zookeeper) | Kafka stack with Kafdrop UI and Zookeeper |
+| [kafka-zookeeper-kafka-ui](https://github.com/enavid/docker-service-kit/tree/main/kafka-zookeeper-kafka-ui) | Kafka stack with modern Kafka UI         |
+| [mariadb](https://github.com/enavid/docker-service-kit/tree/main/mariadb)       | Lightweight MariaDB SQL server             |
+| [mysql-phpmyadmin](https://github.com/enavid/docker-service-kit/tree/main/mysql-phpmyadmin) | MySQL with phpMyAdmin UI                 |
+| [nginx-proxy-manager](https://github.com/enavid/docker-service-kit/tree/main/nginx-proxy-manager) | Simple Nginx reverse proxy manager UI   |
+| [postgresql-pgadmin](https://github.com/enavid/docker-service-kit/tree/main/postgresql-pgadmin) | PostgreSQL with pgAdmin for DB management |
+| [redis-redis-insight](https://github.com/enavid/docker-service-kit/tree/main/redis-redis-insight) | Redis with RedisInsight visualization tool |
 
 > ✨ More stacks will be added soon. Feel free to contribute or request additions!
 
@@ -34,7 +36,7 @@ git clone https://github.com/enavid/docker-service-kit.git
 cd docker-service-kit
 ```
 
-2. Choose a service folder (e.g., `redis-redisinsight`)
+2. Choose a service folder (e.g., `redis-redis-insight`)
 
 3. Follow the instructions in that folder’s `README.md`
 
@@ -44,12 +46,14 @@ cd docker-service-kit
 
 ```
 docker-service-kit/
-├── kafka-kafdrop-zookeeper/
-├── postgres-pgadmin/
-├── redis-redisinsight/
-├── mariadb/
-├── kafka-zookeeper-kafka-ui/
 ├── filebrowser/
+├── kafka-kafdrop-zookeeper/
+├── kafka-zookeeper-kafka-ui/
+├── mariadb/
+├── mysql-phpmyadmin/
+├── nginx-proxy-manager/
+├── postgresql-pgadmin/
+├── redis-redis-insight/
 └── ...
 ```
 
@@ -83,7 +87,7 @@ Want to add a new service or improve existing ones?
 
 ## 📜 License
 
-This project is open-source under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://www.gnu.org/licenses/gpl-3.0.html).
 
 ---
 
