@@ -43,7 +43,7 @@ http://localhost:81
 
 > Default credentials (only on first launch):
 >
-> - **Email**: `admin@example.com`  
+> - **Email**: `admin@example.com`
 > - **Password**: `changeme`
 
 > You will be prompted to change the default login after signing in.
@@ -58,7 +58,7 @@ http://localhost:81
 
 ## 💾 Data Persistence
 
-- All persistent data is stored under `./data`, `./mysql`, and `./letsencrypt`
+- All persistent data is stored under `./docker-volumes/data`, `./docker-volumes/mysql`, and `./docker-volumes/letsencrypt`
 - You can safely stop and restart the stack without losing configuration
 
 ## 📚 Use Cases

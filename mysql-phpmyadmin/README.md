@@ -42,4 +42,4 @@ You can now manage your MySQL database visually.
 
 ## 🧊 Data Persistence
 
-All MySQL data is stored locally in `./mysql_data`. You can safely stop and restart containers without losing data.
+All MySQL data is stored locally in `./docker-volumes/mysql_data`. You can safely stop and restart containers without losing data.

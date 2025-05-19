@@ -36,6 +36,7 @@ http://localhost:9000
 ```
 
 This UI allows you to:
+
 - View Kafka topics
 - Inspect partitions and their leaders
 - Monitor consumer groups
@@ -43,7 +44,7 @@ This UI allows you to:
 
 ## 🔄 Data Persistence
 
-Kafka data will be stored locally in `./kafka_data`. This volume can be reused or deleted based on your needs.
+Kafka data will be stored locally in `./docker-volumes/kafka_data`. This volume can be reused or deleted based on your needs.
 
 ## 🧠 Notes
 
