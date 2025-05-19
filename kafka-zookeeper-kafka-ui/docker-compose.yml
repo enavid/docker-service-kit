@@ -1,0 +1,49 @@
+
+version: '3.9'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.1
+    container_name: zookeeper
+    ports:
+      - "${ZOOKEEPER_CLIENT_PORT}:${ZOOKEEPER_CLIENT_PORT}"
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
+      - ZOOKEEPER_SERVER_ID=${ZOOKEEPER_SERVER_ID}
+    networks:
+      - local-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.1
+    container_name: kafka
+    ports:
+      - '9092:9092'
+      - '29092:29092'
+    environment:
+      - KAFKA_BROKER_ID=${KAFKA_BROKER_ID}
+      - KAFKA_ZOOKEEPER_CONNECT=${KAFKA_ZOOKEEPER_CONNECT}
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=${KAFKA_LISTENER_SECURITY_PROTOCOL_MAP}
+      - KAFKA_ADVERTISED_LISTENERS=${KAFKA_ADVERTISED_LISTENERS}
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}
+    depends_on:
+      - zookeeper
+    networks:
+      - local-net
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - '8083:8080'
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=${KAFKA_UI_CLUSTER_NAME}
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=${KAFKA_UI_BOOTSTRAP_SERVERS}
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=${KAFKA_UI_ZOOKEEPER}
+      - KAFKA_CLUSTERS_0_METRICS_PORT=${KAFKA_UI_METRICS_PORT}
+    depends_on:
+      - kafka
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    name: local-net
