@@ -3,11 +3,11 @@
 
 This project provides a Docker Compose setup for running **Filebrowser** — a simple, beautiful web interface to browse and manage files on your server.
 
-## 📦 What's Included
+## What's Included
 
 - **Filebrowser:** Web-based file manager with role-based access and editing features.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repository
 
@@ -35,7 +35,7 @@ id -g
 ### 3. Start the service
 
 ```bash
-docker-compose --env-file .env up -d
+sudo docker compose --env-file .env up -d
 ```
 
 ### 4. Access the Web UI
@@ -52,13 +52,13 @@ Default credentials:
 
 You can change them in the Filebrowser settings panel.
 
-## 🧠 Notes
+## Notes
 
 - Filebrowser data is stored in `filebrowser.db`
 - The `filebrowser.json` configures the port, root folder, and other settings
 - Files are served from the local `./srv` folder
 
-## 📚 Use Cases
+## Use Cases
 
 - Managing files on remote/dev servers
 - Replacing traditional FTP with modern web-based alternative
