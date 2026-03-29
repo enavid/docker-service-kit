@@ -36,6 +36,7 @@ sudo rm -rf filebrowser.db
 
 # Create the database file before Docker can claim the path
 touch filebrowser.db
+chmod 666 filebrowser.json
 
 # Initialize the database schema
 docker compose run --rm filebrowser config init --database /database/filebrowser.db
