@@ -1,61 +1,108 @@
+# Filebrowser — Docker Stack
 
-# Filebrowser Docker Stack
-
-This project provides a Docker Compose setup for running **Filebrowser** — a simple, beautiful web interface to browse and manage files on your server.
-
-## Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/enavid/docker-service-kit.git
-cd docker-service-kit/filebrowser
-```
-
-### 2. Configure Environment (optional)
-
-Edit the `.env` file to set correct UID and GID for your user:
-
-```env
-PUID=1000
-PGID=1000
-```
-
-You can find your UID and GID with:
-
-```bash
-id -u
-id -g
-```
-
-### 3. Start the service
-
-```bash
-sudo docker compose --env-file .env up -d
-```
-
-### 4. Access the Web UI
-
-Open your browser and go to:
-
-```
-http://localhost:8095
-```
-
-Default credentials:
-- **User:** `admin`
-- **Password:** `admin`
-
-You can change them in the Filebrowser settings panel.
-
-## Notes
-
-- Filebrowser data is stored in `filebrowser.db`
-- The `filebrowser.json` configures the port, root folder, and other settings
-- Files are served from the local `./srv` folder
-
-- Lightweight file management for internal networks
+A clean, production-ready Docker Compose setup for [Filebrowser](https://filebrowser.xyz), a web-based file management interface you can self-host on any server.
 
 ---
 
-This setup allows you to run a beautiful file management UI locally with minimal effort.
+## Prerequisites
+
+Docker and Docker Compose must be installed on your system. Your user ID and group ID are needed to set correct file ownership — run `id -u` and `id -g` to find them.
+
+---
+
+## Configuration
+
+Before starting, edit `.env` to match your environment:
+
+```env
+PUID=1000      # your user id  →  run: id -u
+PGID=1000      # your group id →  run: id -g
+FB_PORT=8095   # port exposed on the host
+TZ=Asia/Tehran # your timezone
+```
+
+The `filebrowser.json` file controls internal settings such as the database path, root folder, and branding. You generally do not need to touch it.
+
+---
+
+## First-Time Setup
+
+Docker requires the database file to exist as a regular file before the container starts. If it is missing, Docker will silently create a directory in its place and the container will fail. Run the following commands exactly once, in order, to initialize everything correctly:
+
+```bash
+# Tear down any previous attempt
+docker compose down
+sudo rm -rf filebrowser.db
+
+# Create the database file before Docker can claim the path
+touch filebrowser.db
+
+# Initialize the database schema
+docker compose run --rm filebrowser config init --database /database/filebrowser.db
+
+# Create the admin user
+docker compose run --rm filebrowser users add admin admin --perm.admin --database /database/filebrowser.db
+
+# Start the service
+docker compose --env-file .env up -d
+```
+
+Once running, open your browser at `http://<server-ip>:8095` and log in with `admin` / `admin`. **Change the password immediately** from the Settings panel.
+
+---
+
+## Day-to-Day Operations
+
+```bash
+# Start
+docker compose --env-file .env up -d
+
+# Stop
+docker compose down
+
+# Restart
+docker compose restart filebrowser
+
+# View live logs
+docker compose logs -f filebrowser
+
+# Pull the latest image and restart
+docker compose pull && docker compose --env-file .env up -d
+```
+
+---
+
+## Resetting the Admin Password
+
+If you ever lose access, reset the password directly through the container without stopping the service:
+
+```bash
+docker exec -it filebrowser /filebrowser users update admin --password "NewPassword123" --database /database/filebrowser.db
+```
+
+---
+
+## File Layout
+
+```
+.
+├── docker-compose.yml    # service definition
+├── filebrowser.json      # filebrowser configuration
+├── .env                  # environment variables (PUID, PGID, port, timezone)
+├── filebrowser.db        # SQLite database — back this up regularly
+└── srv/                  # files served by filebrowser
+```
+
+Back up `filebrowser.db` and `srv/` regularly. The database holds all users, settings, and shares — everything else is stateless.
+
+---
+
+## Production Hardening
+
+Place Filebrowser behind a reverse proxy (Nginx, Caddy, or Traefik) with a valid TLS certificate rather than exposing it directly. Restrict port `8095` at the firewall level so it is not reachable from the public internet. Use a strong, unique password and consider disabling the default `admin` account once you have created a personal account with admin privileges.
+
+---
+
+## Why the `touch filebrowser.db` Step Matters
+
+Docker's bind-mount behavior creates a directory when the target path does not exist on the host. Filebrowser then fails with `open /database/filebrowser.db: is a directory`. Creating an empty file with `touch` before any `docker` command runs prevents this and ensures the mount behaves correctly.
