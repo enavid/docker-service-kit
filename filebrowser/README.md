@@ -1,12 +1,6 @@
-# Filebrowser — Docker Stack
+# Filebrowser
 
-A clean, production-ready Docker Compose setup for [Filebrowser](https://filebrowser.xyz), a web-based file management interface you can self-host on any server.
-
----
-
-## Prerequisites
-
-Docker and Docker Compose must be installed on your system. Your user ID and group ID are needed to set correct file ownership — run `id -u` and `id -g` to find them.
+Docker and Docker Compose must be installed on your system. Your user ID and group ID are needed to set correct file ownership, run `id -u` and `id -g` to find them.
 
 ---
 
@@ -30,10 +24,6 @@ The `filebrowser.json` file controls internal settings such as the database path
 Docker requires the database file to exist as a regular file before the container starts. If it is missing, Docker will silently create a directory in its place and the container will fail. Run the following commands exactly once, in order, to initialize everything correctly:
 
 ```bash
-# Tear down any previous attempt
-docker compose down
-sudo rm -rf filebrowser.db
-
 # Create the database file before Docker can claim the path
 touch filebrowser.db
 chmod 666 filebrowser.db
