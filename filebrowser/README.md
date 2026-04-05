@@ -35,18 +35,18 @@ docker compose run --rm filebrowser config init --database /database/filebrowser
 docker compose run --rm filebrowser users add admin admin --perm.admin --database /database/filebrowser.db
 
 # Start the service
-docker compose --env-file .env up -d
+docker compose up -d
 ```
 
 Once running, open your browser at `http://<server-ip>:8095` and log in with `admin` / `admin`. **Change the password immediately** from the Settings panel.
 
 ---
 
-## Day-to-Day Operations
+## Helpful command
 
 ```bash
 # Start
-docker compose --env-file .env up -d
+docker compose up -d
 
 # Stop
 docker compose down
